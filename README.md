@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Right-Wing Tracker
+
+A data-driven website that tracks democratic backsliding within the U.S. right wing (politics, media, business, and technology) from 2000–present, starting with post–Jan 6 2021 data.
+
+## Overview
+
+This project uses **observable-first principles** to track democratic backsliding through auditable, objective indicators (laws, arrests, budgets, corporate filings) instead of subjective "expert ratings."
+
+### Four Pillars
+
+- **Politics & Elections** – interference, restrictive laws, oversight erosion
+- **Media & Information** – journalist arrests, SLAPP suits, FOIA denials
+- **Business & Money** – PAC funding to anti-democratic actors, lobbying
+- **Technology Platforms** – policy rollbacks, reinstatement of extremist content
+
+### Time Phases
+
+- **Phase 1**: Post-Jan 6 (2021–present) → current focus
+- **Phase 2**: Trump Era (2016–2021) → next
+- **Phase 3**: Baseline (2000–2016) → final context
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and npm
+- TypeScript
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Generate initial scores from sample data
+npm run generate-scores
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   └── page.tsx           # Main page
+├── src/
+│   ├── lib/               # Core library functions
+│   │   ├── etl-server.ts  # ETL functions (server-side)
+│   │   ├── scoring.ts     # Scoring algorithms
+│   │   ├── trends.ts      # Trend analysis
+│   │   ├── presets.ts     # Weight presets
+│   │   ├── provenance.ts  # Data provenance
+│   │   └── types.ts       # TypeScript types
+│   └── hooks/
+│       └── useScores.ts   # React hook for scores
+├── data/
+│   ├── raw/               # Raw source data
+│   ├── events/            # Event data (JSONL)
+│   └── processed/         # Processed indicators and scores
+└── METHODOLOGY.md         # Detailed methodology
+```
 
-## Learn More
+## Data Processing
 
-To learn more about Next.js, take a look at the following resources:
+### Generate Scores
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After adding or updating indicator data, regenerate scores:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run generate-scores
+```
 
-## Deploy on Vercel
+This will:
+1. Load indicators from `data/processed/indicators.csv`
+2. Load events from `data/events/*.jsonl`
+3. Compute pillar and composite scores
+4. Export to `data/processed/scores-*.json`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding Data
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Indicators**: Add rows to `data/processed/indicators.csv` with the required columns
+2. **Events**: Add events to `data/events/{phase}-events.jsonl` (one JSON object per line)
+3. Run `npm run generate-scores` to update scores
+
+## Testing
+
+```bash
+# Run tests
+npm test
+```
+
+## Methodology
+
+See [METHODOLOGY.md](./METHODOLOGY.md) for detailed information about:
+- Scoring algorithms
+- Normalization methods
+- Event gravity penalties
+- Temporal decay
+- Weight presets
+
+## API
+
+### `/api/scores?phase={phase}`
+
+Returns scores for a specific phase (`post-jan6`, `trump-era`, `baseline`).
+
+## Development
+
+### Key Files
+
+- `src/lib/etl-server.ts` - Load raw data, normalize by phase, export indicators.csv
+- `src/lib/scoring.ts` - Combine indicators → pillar/composite + event gravity
+- `src/lib/trends.ts` - Month-to-month deltas, turning points
+- `src/lib/presets.ts` - Weight presets (equal, politicsHeavy, mediaHeavy)
+- `src/lib/provenance.ts` - Attach sources and timestamps
+- `src/hooks/useScores.ts` - React hook to load scores in UI
+
+### UI Hooks
+
+- `useScores(options)` - Load composite & pillar scores from API
+- Supports phase filtering, state filtering (future), and weight presets
+
+## License
+
+Private project - All rights reserved
+
+## Contributing
+
+This is a private project. For questions or contributions, please contact the repository owner.

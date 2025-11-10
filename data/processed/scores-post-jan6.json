@@ -1,0 +1,692 @@
+{
+  "dates": [
+    "2021-02-01",
+    "2021-03-01",
+    "2021-04-01",
+    "2021-05-01",
+    "2021-06-01",
+    "2021-07-01"
+  ],
+  "composite_scores": [
+    {
+      "date": "2021-02-01",
+      "score": 89.38,
+      "uncertainty": 10.31,
+      "confidence": "medium",
+      "pillars": [
+        {
+          "pillar": "politics",
+          "score": 85,
+          "uncertainty": 10.8,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 75,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "media",
+          "score": 75,
+          "uncertainty": 6.97,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "foia_denials",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 70,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 60,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "business",
+          "score": 58.33,
+          "uncertainty": 10.97,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 65,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "technology",
+          "score": 59.17,
+          "uncertainty": 12.5,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 70,
+              "weight": 0.16666666666666666
+            }
+          ]
+        }
+      ],
+      "weights": {
+        "politics": 0.25,
+        "media": 0.25,
+        "business": 0.25,
+        "technology": 0.25
+      },
+      "event_penalty": 20,
+      "event_count": 1
+    },
+    {
+      "date": "2021-03-01",
+      "score": 89.38,
+      "uncertainty": 10.31,
+      "confidence": "medium",
+      "pillars": [
+        {
+          "pillar": "politics",
+          "score": 85,
+          "uncertainty": 10.8,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 75,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "media",
+          "score": 75,
+          "uncertainty": 6.97,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "foia_denials",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 70,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 60,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "business",
+          "score": 58.33,
+          "uncertainty": 10.97,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 65,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "technology",
+          "score": 59.17,
+          "uncertainty": 12.5,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 70,
+              "weight": 0.16666666666666666
+            }
+          ]
+        }
+      ],
+      "weights": {
+        "politics": 0.25,
+        "media": 0.25,
+        "business": 0.25,
+        "technology": 0.25
+      },
+      "event_penalty": 20,
+      "event_count": 1
+    },
+    {
+      "date": "2021-04-01",
+      "score": 89.2,
+      "uncertainty": 10.31,
+      "confidence": "medium",
+      "pillars": [
+        {
+          "pillar": "politics",
+          "score": 85,
+          "uncertainty": 10.8,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 75,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "media",
+          "score": 74.29,
+          "uncertainty": 6.97,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "foia_denials",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 70,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 60,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "business",
+          "score": 58.33,
+          "uncertainty": 10.97,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 65,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "technology",
+          "score": 59.17,
+          "uncertainty": 12.5,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 70,
+              "weight": 0.16666666666666666
+            }
+          ]
+        }
+      ],
+      "weights": {
+        "politics": 0.25,
+        "media": 0.25,
+        "business": 0.25,
+        "technology": 0.25
+      },
+      "event_penalty": 20,
+      "event_count": 2
+    },
+    {
+      "date": "2021-05-01",
+      "score": 88.93,
+      "uncertainty": 10.31,
+      "confidence": "medium",
+      "pillars": [
+        {
+          "pillar": "politics",
+          "score": 85,
+          "uncertainty": 10.8,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 75,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "media",
+          "score": 73.21,
+          "uncertainty": 6.97,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "foia_denials",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 70,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 60,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "business",
+          "score": 58.33,
+          "uncertainty": 10.97,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 65,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "technology",
+          "score": 59.17,
+          "uncertainty": 12.5,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 70,
+              "weight": 0.16666666666666666
+            }
+          ]
+        }
+      ],
+      "weights": {
+        "politics": 0.25,
+        "media": 0.25,
+        "business": 0.25,
+        "technology": 0.25
+      },
+      "event_penalty": 20,
+      "event_count": 2
+    },
+    {
+      "date": "2021-06-01",
+      "score": 88.66,
+      "uncertainty": 10.31,
+      "confidence": "medium",
+      "pillars": [
+        {
+          "pillar": "politics",
+          "score": 85,
+          "uncertainty": 10.8,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 75,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "media",
+          "score": 72.15,
+          "uncertainty": 6.97,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "foia_denials",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 70,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 60,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "business",
+          "score": 58.33,
+          "uncertainty": 10.97,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 65,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "technology",
+          "score": 59.17,
+          "uncertainty": 12.5,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 70,
+              "weight": 0.16666666666666666
+            }
+          ]
+        }
+      ],
+      "weights": {
+        "politics": 0.25,
+        "media": 0.25,
+        "business": 0.25,
+        "technology": 0.25
+      },
+      "event_penalty": 20,
+      "event_count": 3
+    },
+    {
+      "date": "2021-07-01",
+      "score": 88.42,
+      "uncertainty": 10.31,
+      "confidence": "medium",
+      "pillars": [
+        {
+          "pillar": "politics",
+          "score": 85,
+          "uncertainty": 10.8,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "voter_restriction_laws",
+              "value": 75,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "media",
+          "score": 71.19,
+          "uncertainty": 6.97,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "foia_denials",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 70,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "foia_denials",
+              "value": 60,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "business",
+          "score": 58.33,
+          "uncertainty": 10.97,
+          "confidence": "high",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 80,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "pac_funding_anti_democratic",
+              "value": 65,
+              "weight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "pillar": "technology",
+          "score": 59.17,
+          "uncertainty": 12.5,
+          "confidence": "medium",
+          "indicator_count": 6,
+          "top_contributors": [
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 100,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 90,
+              "weight": 0.16666666666666666
+            },
+            {
+              "indicator": "platform_policy_rollbacks",
+              "value": 70,
+              "weight": 0.16666666666666666
+            }
+          ]
+        }
+      ],
+      "weights": {
+        "politics": 0.25,
+        "media": 0.25,
+        "business": 0.25,
+        "technology": 0.25
+      },
+      "event_penalty": 20,
+      "event_count": 3
+    }
+  ],
+  "metadata": {
+    "phase": "post-jan6",
+    "date_range": {
+      "start": "2021-02-01",
+      "end": "2021-07-01"
+    },
+    "last_updated": "2025-11-10T00:00:15.763Z"
+  }
+}
