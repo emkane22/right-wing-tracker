@@ -24,13 +24,29 @@ export async function GET(request: NextRequest) {
     
     if (!fs.existsSync(scoresPath)) {
       return NextResponse.json(
-        { error: "Scores not found. Please run npm run generate-scores first." },
+        { 
+          error: `Scores not found for phase "${phase}".`,
+          message: "This phase may not have data yet. Run 'npm run generate-scores' to generate scores for available phases.",
+          phase 
+        },
         { status: 404 }
       );
     }
     
     const scoresData = fs.readFileSync(scoresPath, "utf-8");
     const scores = JSON.parse(scoresData);
+    
+    // Check if the scores file is empty (no dates)
+    if (!scores.dates || scores.dates.length === 0) {
+      return NextResponse.json(
+        { 
+          error: `No data available for phase "${phase}".`,
+          message: "This phase has no indicator data. Add data to data/processed/indicators.csv and run 'npm run generate-scores'.",
+          phase 
+        },
+        { status: 404 }
+      );
+    }
     
     return NextResponse.json(scores);
   } catch (error) {
