@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseServer } from '@/src/lib/supabase-server';
+import { getSupabaseServer } from '@/src/lib/supabase-server';
 
 export async function GET(request: NextRequest) {
   try {
+    const supabaseServer = getSupabaseServer();
+    
     // Get counts for each table
     const [peopleCount, orgsCount, topicsCount, sourcesCount, statementsCount] = await Promise.all([
       supabaseServer.from('people').select('id', { count: 'exact', head: true }),
@@ -54,8 +56,22 @@ export async function GET(request: NextRequest) {
       topTopics,
     });
   } catch (error) {
-    console.error('Error in /api/stats:', error);
-    return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    console.error('Error in /api/stats:', {
+      message: errorMessage,
+      stack: errorStack,
+      error,
+    });
+    
+    return NextResponse.json(
+      { 
+        error: 'Failed to fetch stats',
+        message: errorMessage,
+      },
+      { status: 500 }
+    );
   }
 }
 

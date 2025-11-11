@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseServer } from '@/src/lib/supabase-server';
+import { getSupabaseServer } from '@/src/lib/supabase-server';
 
 export async function GET(request: NextRequest) {
   try {
+    const supabaseServer = getSupabaseServer();
     const searchParams = request.nextUrl.searchParams;
     const limit = parseInt(searchParams.get('limit') || '100');
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -17,14 +18,41 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query.order('label');
 
     if (error) {
-      console.error('Error fetching topics:', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error('Error fetching topics:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code,
+      });
+      return NextResponse.json(
+        { 
+          error: error.message || 'Failed to fetch topics',
+          details: error.details,
+          hint: error.hint,
+          code: error.code,
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ data, count: data?.length || 0 });
   } catch (error) {
-    console.error('Error in /api/topics:', error);
-    return NextResponse.json({ error: 'Failed to fetch topics' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    console.error('Error in /api/topics:', {
+      message: errorMessage,
+      stack: errorStack,
+      error,
+    });
+    
+    return NextResponse.json(
+      { 
+        error: 'Failed to fetch topics',
+        message: errorMessage,
+      },
+      { status: 500 }
+    );
   }
 }
 
