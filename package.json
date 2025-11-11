@@ -1,12 +1,4 @@
 {
-  {
-    "scripts": {
-      "import-data": "dotenv -e .env.local -- tsx scripts/import-csv-data.ts",
-      "test-supabase": "dotenv -e .env.local -- tsx scripts/test-supabase-connection.ts",
-      "dev": "next dev"
-    }
-  }
-  
   "name": "right-wing-tracker",
   "version": "0.1.0",
   "private": true,
@@ -17,8 +9,8 @@
     "lint": "eslint",
     "generate-scores": "tsx src/lib/generate-scores.ts",
     "test": "jest",
-    "import-data": "tsx scripts/import-csv-data.ts",
-    "test-supabase": "tsx scripts/test-supabase-connection.ts"
+    "import-data": "dotenv -e .env.local -- tsx scripts/import-csv-data.ts",
+    "test-supabase": "dotenv -e .env.local -- tsx scripts/test-supabase-connection.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.81.0",
