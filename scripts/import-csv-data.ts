@@ -17,7 +17,12 @@ const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
   console.error('Error: DATABASE_URL environment variable is not set');
   console.error('Please set it in your .env.local file:');
-  console.error('DATABASE_URL=postgresql://postgres:[YOUR_PASSWORD]@db.yeyytxdwwgraesyiyqfl.supabase.co:5432/postgres');
+  console.error('DATABASE_URL=postgresql://postgres:[YOUR_PASSWORD]@db.[YOUR_PROJECT_REF].supabase.co:5432/postgres');
+  console.error('');
+  console.error('To find your project reference:');
+  console.error('1. Go to your Supabase project dashboard');
+  console.error('2. Check the URL or go to Project Settings > General');
+  console.error('3. The project reference is the part before .supabase.co');
   process.exit(1);
 }
 

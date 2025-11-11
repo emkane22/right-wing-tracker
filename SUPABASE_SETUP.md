@@ -21,19 +21,34 @@ Create a `.env.local` file in the project root with the following variables:
 
 ```env
 # Database connection (for migrations and imports)
-DATABASE_URL=postgresql://postgres:[YOUR_PASSWORD]@db.[YOUR_PROJECT_REF].supabase.co:5432/postgres
+DATABASE_URL=postgresql://postgres:[YOUR_PASSWORD]@db.yeyytxdwwgraesyiyqfl.supabase.co:5432/postgres
 
 # Supabase API (for client-side and API routes)
-NEXT_PUBLIC_SUPABASE_URL=https://[YOUR_PROJECT_REF].supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://yeyytxdwwgraesyiyqfl.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=[YOUR_ANON_KEY]
 SUPABASE_SERVICE_KEY=[YOUR_SERVICE_ROLE_KEY]
 ```
 
+**Project Reference**: `yeyytxdwwgraesyiyqfl`
+
 Replace:
 - `[YOUR_PASSWORD]` with your database password
-- `[YOUR_PROJECT_REF]` with your project reference (found in project settings)
 - `[YOUR_ANON_KEY]` with your anon/public key (safe to expose to client)
 - `[YOUR_SERVICE_ROLE_KEY]` with your service role key (keep secret, server-side only)
+
+### Verify Your Configuration
+
+After setting up your `.env.local` file, you can verify the connection:
+
+**PowerShell:**
+```powershell
+.\scripts\verify-supabase-url.ps1
+```
+
+**Or test the connection:**
+```powershell
+npm run test-supabase
+```
 
 ## Step 3: Create Database Tables
 
