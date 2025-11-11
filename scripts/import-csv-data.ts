@@ -1,4 +1,7 @@
+import 'dotenv/config';
+
 /**
+ * 
  * Script to import CSV data into Supabase
  * Run with: tsx scripts/import-csv-data.ts
  * 
