@@ -8,11 +8,17 @@
     "start": "next start",
     "lint": "eslint",
     "generate-scores": "tsx src/lib/generate-scores.ts",
-    "test": "jest"
+    "test": "jest",
+    "import-data": "tsx scripts/import-csv-data.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.81.0",
+    "@types/papaparse": "^5.5.0",
+    "@types/pg": "^8.15.6",
     "lucide-react": "^0.553.0",
     "next": "16.0.1",
+    "papaparse": "^5.5.3",
+    "pg": "^8.16.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "recharts": "^3.3.0"

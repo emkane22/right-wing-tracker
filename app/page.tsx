@@ -12,64 +12,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Flame, TrendingUp, Users, MapPin, Search, AlertTriangle } from "lucide-react";
-
-/**
- * Drop this entire file into: app/page.tsx
- * Then run: npm install recharts lucide-react
- * Start dev server: npm run dev
- *
- * Notes:
- * - All data is mocked for now. Replace with your sheet/API later.
- * - Clean, NYT-ish layout with big type, spacing, and muted colors.
- */
-
-// ---------------------- Mock Data ----------------------
-const MOCK_ACTIVITY = [
-  { date: "2025-10-13", events: 8 },
-  { date: "2025-10-20", events: 11 },
-  { date: "2025-10-27", events: 7 },
-  { date: "2025-11-03", events: 15 },
-  { date: "2025-11-10", events: 18 },
-];
-
-const MOCK_TOPICS = [
-  { topic: "Immigration", mentions: 42 },
-  { topic: "Abortion", mentions: 28 },
-  { topic: "Education", mentions: 21 },
-  { topic: "China", mentions: 19 },
-  { topic: "LGBTQ+", mentions: 17 },
-];
-
-const MOCK_PEOPLE = [
-  {
-    id: "trump",
-    name: "Donald Trump",
-    role: "Politician",
-    headshot: "https://placehold.co/96x96",
-    recent: 9,
-  },
-  {
-    id: "carlson",
-    name: "Tucker Carlson",
-    role: "Media figure",
-    headshot: "https://placehold.co/96x96",
-    recent: 6,
-  },
-  {
-    id: "fuentes",
-    name: "Nick Fuentes",
-    role: "Activist",
-    headshot: "https://placehold.co/96x96",
-    recent: 5,
-  },
-  {
-    id: "sweeney",
-    name: "Sydney Sweeney",
-    role: "Cultural figure",
-    headshot: "https://placehold.co/96x96",
-    recent: 3,
-  },
-];
+import { useStats } from "@/src/hooks/useStats";
+import { usePeople } from "@/src/hooks/usePeople";
+import { useTopics } from "@/src/hooks/useTopics";
+import { useStatements } from "@/src/hooks/useStatements";
 
 // Democratic backsliding indicators with trends and incidents
 const INDICATORS = [
@@ -108,6 +54,15 @@ const INDICATORS = [
     trend: "stable",
     incidents: 19,
   },
+];
+
+// Mock activity data (to be replaced with real data from statements)
+const MOCK_ACTIVITY = [
+  { date: "2025-10-13", events: 8 },
+  { date: "2025-10-20", events: 11 },
+  { date: "2025-10-27", events: 7 },
+  { date: "2025-11-03", events: 15 },
+  { date: "2025-11-10", events: 18 },
 ];
 
 function classNames(...s: (string | false | null | undefined)[]) {
@@ -175,12 +130,37 @@ function Nav({ current, onSet }: { current: string; onSet: (s: string) => void }
   );
 }
 
-function MiniStat({ label, value, sub }: { label: string; value: string; sub?: string }) {
+function MiniStat({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
     <div className="rounded-2xl border p-4">
       <p className="text-xs uppercase tracking-wide text-neutral-500">{label}</p>
       <p className="text-2xl font-semibold text-neutral-900">{value}</p>
       {sub && <p className="text-xs text-neutral-500 mt-1">{sub}</p>}
+    </div>
+  );
+}
+
+function DashboardStats() {
+  const { stats, loading } = useStats();
+
+  if (loading) {
+    return (
+      <div className="grid md:grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="rounded-2xl border p-4 animate-pulse">
+            <div className="h-16 bg-neutral-200 rounded" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid md:grid-cols-4 gap-4">
+      <MiniStat label="New developments" value={stats?.recentStatements || 0} sub="past 30 days" />
+      <MiniStat label="People tracked" value={stats?.people || 0} />
+      <MiniStat label="Topics tracked" value={stats?.topics || 0} />
+      <MiniStat label="Statements" value={stats?.statements || 0} />
     </div>
   );
 }
@@ -205,12 +185,46 @@ function ActivityChart() {
 }
 
 function TopicsBarChart() {
+  const { stats, loading } = useStats();
+  
+  const chartData = useMemo(() => {
+    if (!stats?.topTopics || stats.topTopics.length === 0) {
+      return [];
+    }
+    return stats.topTopics.slice(0, 5).map((t) => ({
+      topic: t.topic,
+      mentions: t.count,
+    }));
+  }, [stats]);
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl border p-4">
+        <p className="text-sm font-medium mb-2">Topic frequency (last 30 days)</p>
+        <div className="h-56 flex items-center justify-center">
+          <p className="text-sm text-neutral-500">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (chartData.length === 0) {
+    return (
+      <div className="rounded-2xl border p-4">
+        <p className="text-sm font-medium mb-2">Topic frequency (last 30 days)</p>
+        <div className="h-56 flex items-center justify-center">
+          <p className="text-sm text-neutral-500">No data available</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl border p-4">
       <p className="text-sm font-medium mb-2">Topic frequency (last 30 days)</p>
       <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={MOCK_TOPICS} margin={{ left: 8, right: 8, top: 10, bottom: 0 }}>
+          <BarChart data={chartData} margin={{ left: 8, right: 8, top: 10, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="topic" tick={{ fontSize: 12 }} />
             <YAxis tick={{ fontSize: 12 }} />
@@ -287,18 +301,58 @@ function FascismIndicator() {
 }
 
 function PeopleStrip() {
+  const { people, loading } = usePeople();
+  const { statements } = useStatements({ limit: 1000 });
+
+  // Count statements per person in last 30 days
+  const peopleWithCounts = useMemo(() => {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const dateStr = thirtyDaysAgo.toISOString().split('T')[0];
+
+    const statementCounts: Record<string, number> = {};
+    statements?.forEach((stmt) => {
+      if (stmt.date >= dateStr && stmt.actor_id) {
+        statementCounts[stmt.actor_id] = (statementCounts[stmt.actor_id] || 0) + 1;
+      }
+    });
+
+    return people
+      .map((p) => ({
+        ...p,
+        recent: statementCounts[p.id] || 0,
+      }))
+      .sort((a, b) => b.recent - a.recent)
+      .slice(0, 8);
+  }, [people, statements]);
+
+  if (loading) {
+    return (
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="rounded-2xl border p-4 animate-pulse">
+            <div className="h-20 bg-neutral-200 rounded" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {MOCK_PEOPLE.map((p) => (
+      {peopleWithCounts.map((p) => (
         <div key={p.id} className="rounded-2xl border p-4 hover:shadow-sm transition">
           <div className="flex items-center gap-3">
-            {/* Replace with real photos later */}
-            <img src={p.headshot} alt={p.name} className="h-14 w-14 rounded-xl object-cover" />
-            <div>
-              <p className="font-medium leading-tight">{p.name}</p>
-              <p className="text-xs text-neutral-500">{p.role}</p>
+            <div className="h-14 w-14 rounded-xl bg-neutral-200 flex items-center justify-center">
+              <span className="text-xl font-semibold text-neutral-400">
+                {p.name.charAt(0).toUpperCase()}
+              </span>
             </div>
-            <div className="ml-auto text-right">
+            <div className="flex-1 min-w-0">
+              <p className="font-medium leading-tight truncate">{p.name}</p>
+              <p className="text-xs text-neutral-500 truncate">{p.role || 'Unknown'}</p>
+            </div>
+            <div className="text-right flex-shrink-0">
               <p className="text-xs text-neutral-500">30‑day activity</p>
               <p className="text-lg font-semibold">{p.recent}</p>
             </div>
@@ -332,6 +386,104 @@ function StatesTeaser() {
   );
 }
 
+function TopicsList() {
+  const { topics, loading } = useTopics();
+  const { stats } = useStats();
+
+  const topicsWithCounts = useMemo(() => {
+    const topicCountMap = new Map(stats?.topTopics?.map((t) => [t.topic, t.count]) || []);
+    return topics.map((topic) => ({
+      ...topic,
+      count: topicCountMap.get(topic.id) || 0,
+    })).sort((a, b) => b.count - a.count);
+  }, [topics, stats]);
+
+  if (loading) {
+    return (
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div key={i} className="rounded-2xl border p-4 animate-pulse">
+            <div className="h-16 bg-neutral-200 rounded" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {topicsWithCounts.map((t) => (
+        <div key={t.id} className="rounded-2xl border p-4 hover:shadow-sm transition">
+          <p className="font-medium">{t.label}</p>
+          <p className="text-sm text-neutral-500 mt-1">{t.count} mentions in last 30 days</p>
+          {t.definition && (
+            <p className="text-xs text-neutral-400 mt-2 line-clamp-2">{t.definition}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TrumpProfile() {
+  const { statements, loading } = useStatements({ actorId: 'person:trump-donald', limit: 10 });
+  const { people } = usePeople();
+  const trump = people.find((p) => p.id === 'person:trump-donald');
+
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  return (
+    <div className="grid lg:grid-cols-5 gap-6">
+      <div className="lg:col-span-3 space-y-4">
+        <div className="rounded-2xl border p-4">
+          <p className="text-sm font-medium mb-2">Recent statements</p>
+          <ul className="space-y-3 text-sm">
+            {statements.length === 0 ? (
+              <li className="text-neutral-500">No statements found</li>
+            ) : (
+              statements.map((stmt) => (
+                <li key={stmt.id} className="border-l-2 pl-3">
+                  <span className="font-medium">{new Date(stmt.date).toLocaleDateString()}</span> – {stmt.short_quote || stmt.notes}
+                  {stmt.sources?.url && (
+                    <a
+                      href={stmt.sources.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2 text-blue-600 hover:underline"
+                    >
+                      (source)
+                    </a>
+                  )}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      </div>
+      <div className="lg:col-span-2 space-y-4">
+        {trump && (
+          <div className="rounded-2xl border p-4">
+            <p className="text-sm font-medium mb-2">Profile</p>
+            <p className="text-sm text-neutral-600">{trump.role || 'Politician'}</p>
+            {trump.jurisdiction && (
+              <p className="text-sm text-neutral-600 mt-1">Jurisdiction: {trump.jurisdiction}</p>
+            )}
+            {trump.notes && (
+              <p className="text-sm text-neutral-500 mt-2">{trump.notes}</p>
+            )}
+          </div>
+        )}
+        <div className="rounded-2xl border p-4">
+          <p className="text-sm font-medium">Network</p>
+          <p className="text-sm text-neutral-600">Visual map coming soon. Shows media allies, donors, key state actors.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Page() {
   const [tab, setTab] = useState("dashboard");
 
@@ -341,13 +493,8 @@ export default function Page() {
 
       {tab === "dashboard" && (
         <>
-          <Section kicker="Today" title="What’s happening on the American right">
-            <div className="grid md:grid-cols-4 gap-4">
-              <MiniStat label="New developments" value="18" sub="past 7 days" />
-              <MiniStat label="People tracked" value="13" />
-              <MiniStat label="Topics tracked" value="32" />
-              <MiniStat label="States with activity" value="27" />
-            </div>
+          <Section kicker="Today" title="What's happening on the American right">
+            <DashboardStats />
           </Section>
 
           <Section title="Trends and velocity">
@@ -397,59 +544,13 @@ export default function Page() {
 
       {tab === "topics" && (
         <Section kicker="Browse" title="All topics">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {MOCK_TOPICS.map((t) => (
-              <div key={t.topic} className="rounded-2xl border p-4 hover:shadow-sm transition">
-                <p className="font-medium">{t.topic}</p>
-                <p className="text-sm text-neutral-500">{t.mentions} mentions in last 30 days.</p>
-              </div>
-            ))}
-          </div>
+          <TopicsList />
         </Section>
       )}
 
       {tab === "trump" && (
         <Section kicker="Profile" title="Donald Trump">
-          <div className="grid lg:grid-cols-5 gap-6">
-            <div className="lg:col-span-3 space-y-4">
-              <div className="rounded-2xl border p-4">
-                <p className="text-sm font-medium mb-2">Trajectory</p>
-                <div className="h-56">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={MOCK_ACTIVITY}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                      <YAxis tick={{ fontSize: 12 }} />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="events" strokeWidth={2} dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-              <div className="rounded-2xl border p-4">
-                <p className="text-sm font-medium mb-2">Recent statements</p>
-                <ul className="space-y-3 text-sm">
-                  <li className="border-l-2 pl-3">Nov 9 – Rally remarks on immigration escalation in TX (link)</li>
-                  <li className="border-l-2 pl-3">Nov 6 – Post on judiciary overreach; calls for reforms (link)</li>
-                  <li className="border-l-2 pl-3">Nov 4 – Signals support for state-level election bills (link)</li>
-                </ul>
-              </div>
-            </div>
-            <div className="lg:col-span-2 space-y-4">
-              <div className="rounded-2xl border p-4">
-                <p className="text-sm font-medium">Key positions</p>
-                <ul className="mt-2 text-sm list-disc ml-5 space-y-1">
-                  <li>Hard-line immigration enforcement</li>
-                  <li>Aggressive executive power expansion</li>
-                  <li>Purges in federal bureaucracy</li>
-                </ul>
-              </div>
-              <div className="rounded-2xl border p-4">
-                <p className="text-sm font-medium">Network</p>
-                <p className="text-sm text-neutral-600">Visual map coming soon. Shows media allies, donors, key state actors.</p>
-              </div>
-            </div>
-          </div>
+          <TrumpProfile />
         </Section>
       )}
 
